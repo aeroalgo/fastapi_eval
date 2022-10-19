@@ -1,5 +1,5 @@
 from environs import Env
-from pydantic import BaseSettings, Field, validator
+from pydantic import BaseSettings
 
 env = Env()
 env.read_env()
