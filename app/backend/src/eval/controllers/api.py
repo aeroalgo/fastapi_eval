@@ -15,7 +15,7 @@ async def hello():
 
 
 @router.get("/eval")
-async def get_phrase(phrase: Example = Depends(), status_code=status.HTTP_200_OK):
+async def get_phrase(phrase: Example = Depends(Example), status_code=status.HTTP_200_OK):
     """Метод принимает математическое выражение в виде строки query string"""
     if isinstance(phrase.phrase, HTTPException):
         return Response(status_code=400, content='Incorrect expression')
