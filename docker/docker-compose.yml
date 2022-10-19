@@ -1,0 +1,30 @@
+version: '3.7'
+
+x-backend-env:
+  &backend-env
+    APP_PORT: ${APP_PORT}
+    PYTHONPATH: ${PYTHONPATH}
+
+
+x-backend:
+  &backend
+  build:
+    context: ../../
+    dockerfile: fastapi_eval/docker/Dockerfile
+  ports:
+    - "8003:8003"
+  restart: on-failure
+  tty: true
+  volumes:
+    - "../../fastapi_eval/app:/var/app"
+  environment:
+    <<: *backend-env
+
+
+services:
+
+  # ####################################################################################################################
+  # Веб-сервисы (backend)
+  # ####################################################################################################################
+  backend:
+    <<: *backend
