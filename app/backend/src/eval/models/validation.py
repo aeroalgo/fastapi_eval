@@ -1,7 +1,7 @@
 import re
 from typing import *
-from fastapi import HTTPException, Response
-from pydantic import BaseModel, Field, validator
+from fastapi import HTTPException
+from pydantic import BaseModel, validator
 
 
 class Example(BaseModel):
