@@ -22,11 +22,11 @@ async def get_phrase(phrase: Example = Depends(), status_code=status.HTTP_200_OK
     loop = asyncio.get_event_loop()
     with ProcessPoolExecutor(max_workers=1) as executor:
         expression = await loop.run_in_executor(executor, Calculate, phrase.phrase)
-    response = ResponseExample(result=f'{phrase.phrase}={expression.result}')
-    return Response(status_code=status_code, content=response.result)
+    example = ResponseExample(result=f'{phrase.phrase}={expression.result}')
+    return Response(status_code=status_code, content=example.result)
 
 
-@router.post("/eval")
+@router.post("/eval", response_model=ResponseExample)
 async def post_phrase(phrase: Example, status_code=status.HTTP_201_CREATED):
     """Метод принимает математическое выражение в json"""
     if isinstance(phrase.phrase, HTTPException):
@@ -34,5 +34,5 @@ async def post_phrase(phrase: Example, status_code=status.HTTP_201_CREATED):
     loop = asyncio.get_event_loop()
     with ProcessPoolExecutor(max_workers=1) as executor:
         expression = await loop.run_in_executor(executor, Calculate, phrase.phrase)
-    response = ResponseExample(result=f'{phrase.phrase}={expression.result}')
-    return Response(status_code=status_code, content=dict(response))
+    example = ResponseExample(result=f'{phrase.phrase}={expression.result}')
+    return ORJSONResponse(status_code=status_code, content=dict(example))

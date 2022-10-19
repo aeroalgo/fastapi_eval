@@ -1,6 +1,6 @@
 import re
 from typing import *
-from fastapi import HTTPException
+from fastapi import HTTPException, Response
 from pydantic import BaseModel, Field, validator
 
 
@@ -16,7 +16,6 @@ class Example(BaseModel):
             v = v.replace("'", '')
         regExs = (r"^(?:\d+|\(\d+\s*[-+/*]\s*\d+\))(?:\s*[-+/*]\s*(?:\d+|\(\d+\s*[-+/*]\s*\d+\)))*$",)
         if not re.search(regExs[0], v):
-            print(v)
             return HTTPException(status_code=400, detail="Incorrect expression")
         return v
 
