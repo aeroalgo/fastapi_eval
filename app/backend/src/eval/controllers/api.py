@@ -15,24 +15,24 @@ async def hello():
 
 
 @router.get("/eval")
-async def get_phrase(phrase: Example = Depends(), status_code=status.HTTP_200_OK, response_model=ResponseExample):
+async def get_phrase(phrase: Example = Depends(), status_code=status.HTTP_200_OK):
     """Метод принимает математическое выражение в виде строки query string"""
     if isinstance(phrase.phrase, HTTPException):
         return Response(status_code=400, content='Incorrect expression')
     loop = asyncio.get_event_loop()
     with ProcessPoolExecutor(max_workers=1) as executor:
         expression = await loop.run_in_executor(executor, Calculate, phrase.phrase)
-    response_model = response_model(result=f'{phrase.phrase}={expression.result}')
-    return Response(status_code=status_code, content=response_model.result)
+    response = ResponseExample(result=f'{phrase.phrase}={expression.result}')
+    return Response(status_code=status_code, content=response.result)
 
 
 @router.post("/eval")
-async def post_phrase(phrase: Example, status_code=status.HTTP_201_CREATED, response_model=ResponseExample):
+async def post_phrase(phrase: Example, status_code=status.HTTP_201_CREATED):
     """Метод принимает математическое выражение в json"""
     if isinstance(phrase.phrase, HTTPException):
         raise phrase.phrase
     loop = asyncio.get_event_loop()
     with ProcessPoolExecutor(max_workers=1) as executor:
         expression = await loop.run_in_executor(executor, Calculate, phrase.phrase)
-    response_model = response_model(result=f'{phrase.phrase}={expression.result}')
-    return ORJSONResponse(status_code=status_code, content=dict(response_model))
+    response = ResponseExample(result=f'{phrase.phrase}={expression.result}')
+    return Response(status_code=status_code, content=dict(response))
