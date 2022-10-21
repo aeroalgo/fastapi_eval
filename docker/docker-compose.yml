@@ -12,7 +12,7 @@ x-backend:
     context: ../../
     dockerfile: fastapi_eval/docker/Dockerfile
   ports:
-    - "8003:8003"
+    - "${APP_PORT}:${APP_PORT}"
   restart: on-failure
   tty: true
   volumes:
