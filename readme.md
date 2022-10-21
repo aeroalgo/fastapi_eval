@@ -1,13 +1,5 @@
 # fastapi_eval
 
-Для начала работы сервиса необходимо скопировать файл параметров окружения в корневой папке и папке docker
-
-```shell script
-cp .env.dist .env
-cd docker
-cp .env.dist .env
-```
-
 Запустить контейнер
 
 ```shell script
