@@ -6,6 +6,7 @@ from pydantic import BaseSettings
 
 env = Env()
 env.read_env()
+
 if not os.environ.get("PYTHONPATH"):
     os.environ["PYTHONPATH"] = sys.path[0]
 
@@ -13,7 +14,7 @@ if not os.environ.get("PYTHONPATH"):
 class Settings(BaseSettings):
     """Класс настроек проекта"""
     APP_PORT: int
-    PYTHONPATH: str = env("PYTHONPATH")
+    PYTHONPATH: str
 
 
 setting = Settings()
