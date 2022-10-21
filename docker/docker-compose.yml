@@ -3,7 +3,7 @@ version: '3.7'
 x-backend-env:
   &backend-env
     APP_PORT: ${APP_PORT}
-    PYTHONPATH: ${PYTHONPATH}
+    PYTHONPATH: /var
 
 
 x-backend:
